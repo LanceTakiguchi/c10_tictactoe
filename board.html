@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <style>
+        body{
+            font-size: 0;
+        }
+        .gamesquare{
+            display:inline-block ;
+            border: 2px solid black;
+        }
+        .gamesquare3{
+            height: 150px;
+            width: 150px;
+        }
+        .gamesquare9{
+            height: 50px;
+            width: 50px;
+        }
+        .gamesquare20{
+            height: 30px;
+            width: 30px;
+        }
+        .playerX{
+            margin-top:10%;
+            background: url(images/playerX.png);
+            background-size:contain;
+            background-repeat: no-repeat;
+            height:100%;
+            width:100%;
+        }
+        .playerO{
+            background: url(images/playerO.jpg);
+            background-size:contain ;
+            background-repeat: no-repeat;
+            height:100%;
+            width:100%;
+        }
+
+    </style>
+    <script>
+        var whos_turn = 'x';
+        var clicks = 0;
+        var increment = true;
+
+
+        function loadsquares() {
+            var gamesize = 3;
+            var $gameboard = $('.gameboard');
+            for (var i = 0; i < gamesize; i++) {
+                var row = $('<div>').addClass('row'+i);
+                $gameboard.append(row);
+                for (var j = 0; j < gamesize; j++) {
+                    var square = $('<div>').addClass('gamesquare').data('column', j).data('row', i);
+                    $('.row'+i).append(square);
+                }
+            }
+            //---------------- making size of squares appropriate vs number of squares
+           if(gamesize == 3){
+               $(".gamesquare").addClass('gamesquare3');
+           }
+            else if(gamesize == 9){
+                $(".gamesquare").addClass('gamesquare9');
+            }
+            else{
+                $(".gamesquare").addClass('gamesquare20');
+            }
+            loadclickhandlers();
+       }
+
+       function loadclickhandlers(){
+           $('.gamesquare').click(position_tracker);
+           $('.gamesquare').click(music_layering);
+       }
+
+       function position_tracker() {
+           var row = $(this).data('row');
+           var column = $(this).data('column');
+
+           console.log("row :" + row);
+           console.log("column :" + column);
+
+           if (whos_turn == 'x') {
+               var player1 = $('<div>').addClass('playerX');
+               $(this).append(player1);
+               whos_turn = 'o';
+           }
+           else if (whos_turn == 'o') {
+               var player2 = $('<div>').addClass('playerO');
+               $(this).append(player2);
+               whos_turn = 'x';
+           }
+       }
+        function music_layering(){
+
+            if(increment == true) {
+                clicks++;
+                console.log(clicks+"clicks!!!");
+                if(clicks ==7){
+                    increment = false;
+                }
+            }
+            else{
+                clicks--;
+                console.log(clicks+"clicks!!!");
+                if(clicks ==1 ){
+                    increment = true;
+                }
+            }
+            switch(clicks){
+                case 1:
+                    for(var i=0; i<8; i++){
+                        $("#layer"+i).prop('muted', true);
+                    }
+                    $("#layer1").prop('muted', false);
+                    break;
+                case 2:
+                    for(var i=0; i<8; i++){
+                        $("#layer"+i).prop('muted', true);
+                    }
+                    $("#layer2").prop('muted', false);
+                    break;
+                case 3:
+                    for(var i=0; i<8; i++){
+                        $("#layer"+i).prop('muted', true);
+                    }
+                    $("#layer3").prop('muted', false);
+                    break;;
+                case 4:
+                    for(var i=0; i<8; i++){
+                        $("#layer"+i).prop('muted', true);
+                    }
+                    $("#layer4").prop('muted', false);
+                    break;
+                case 5:
+                    for(var i=0; i<8; i++){
+                        $("#layer"+i).prop('muted', true);
+                    }
+                    $("#layer5").prop('muted', false);
+                    break;
+                case 6:
+                    for(var i=0; i<8; i++){
+                        $("#layer"+i).prop('muted', true);
+                    }
+                    $("#layer6").prop('muted', false);
+                    break;
+                case 7:
+                    for(var i=0; i<8; i++){
+                        $("#layer"+i).prop('muted', true);
+                    }
+                    $("#layer7").prop('muted', false);
+                    break;
+            }
+        }
+
+    </script>
+</head>
+<body onload="loadsquares()">
+<audio id="layer1" src="music%20layers/layer1.mp3" muted autoplay loop></audio>
+<audio id="layer2" src="music%20layers/layer2.mp3" muted autoplay loop></audio>
+<audio id="layer3" src="music%20layers/layer3.mp3" muted autoplay loop></audio>
+<audio id="layer4" src="music%20layers/layer4.mp3" muted autoplay loop></audio>
+<audio id="layer5" src="music%20layers/layer5.mp3" muted autoplay loop></audio>
+<audio id="layer6" src="music%20layers/layer6.mp3" muted autoplay loop></audio>
+<audio id="layer7" src="music%20layers/layer7.mp3" muted autoplay loop></audio>
+
+    <div class="gameboard"></div>
+
+</body>
+</html>
